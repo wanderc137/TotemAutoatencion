@@ -258,7 +258,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   .section{padding:72px 0}
 }
 </style>
-</head>
+<link rel="stylesheet" href="assets/community.css?v=5"></head>
 <body style="--accent:#D4A843;--accent2:#14F195">
 <div class="grid-overlay"></div>
 <div class="glow one"></div>
@@ -275,6 +275,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
       <a href="#como">Cómo funciona</a>
       <a href="#arquitectura">Arquitectura</a>
       <a href="#docs">Documentación</a>
+      <a href="#comunidad">Comunidad</a>
       <a class="btn btn-ghost" style="padding:9px 15px" href="https://github.com/wanderc137/TotemAutoatencion" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </div>
@@ -390,8 +391,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   <div class="wrap">
     <div class="cta-card reveal">
       <div class="kicker" style="justify-content:center">Portfolio · 21 proyectos</div>
-      <h2>¿Construimos algo así?</h2>
-      <p>¿Necesitás un tótem que arranque rápido y no dependa de un navegador? Hablemos de una app nativa.</p>
+      <h2>¿Te animás?</h2>
+      <p>Usá esto como base y referencia para montar un tótem de autoatención en Windows con tickets ESC/POS y pantalla vertical. Este proyecto es la prueba de que se puede hacer con componentes reales.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="https://wanderc137.github.io/" target="_blank" rel="noopener">Ver todos los proyectos <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="https://github.com/wanderc137/TotemAutoatencion" target="_blank" rel="noopener">Explorar el código</a>
@@ -443,5 +444,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 })();
 </script>
+
+<script>window.PORTFOLIO_COMMUNITY = {"account": "wanderc137", "repo": "TotemAutoatencion", "coinNamespace": "wanderc137-totemautoatencion-coins-v1", "faqs": [{"q": "¿Qué hace?", "a": "Tótem Win32 en C para pantalla vertical 1080×1920: emite tickets A/B/C y muestra llamados."}, {"q": "¿Cómo imprime?", "a": "ESC/POS directo a una Masung MS800 por COM, sin driver."}, {"q": "¿Dónde guarda el estado?", "a": "En <code>llamados.txt</code> y <code>contadores.dat</code>, junto al ejecutable."}, {"q": "¿Cómo se compila?", "a": "Con MinGW/CMake en Windows 10/11; el README tiene los comandos."}, {"q": "¿Cuáles son los límites?", "a": "No se validó en hardware real, la detección de impresora es ciega y es un solo tótem."}]};</script>
+<script src="assets/community.js?v=5" defer></script>
 </body>
 </html>
