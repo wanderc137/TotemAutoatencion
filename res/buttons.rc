@@ -1,0 +1,5 @@
+/* Botones del totem */
+101 BITMAP "btn_verde.bmp"
+102 BITMAP "btn_azul.bmp"
+103 BITMAP "btn_rojo.bmp"
+104 BITMAP "btn_negro.bmp"

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="900" viewBox="0 0 1320 900" role="img" aria-labelledby="title desc">
+  <title id="title">Flujo de emision de un ticket</title>
+  <desc id="desc">Recorrido desde el toque en pantalla hasta la impresion ESC/POS y el retorno al panel de llamados, con la linea de tiempo de los estados de la interfaz y la estructura de la trama enviada al puerto serie.</desc>
+
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d4a843"/>
+    </marker>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7ee0a8"/>
+    </marker>
+    <marker id="c" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b86b8"/>
+    </marker>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#08111f"/>
+      <stop offset="100%" stop-color="#0e2038"/>
+    </linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#1b3358"/>
+    </pattern>
+  </defs>
+
+  <rect width="1320" height="900" fill="url(#bg2)"/>
+  <rect width="1320" height="900" fill="url(#dots)" opacity="0.8"/>
+
+  <text x="52" y="58" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="15" fill="#d4a843" letter-spacing="3">FLUJO FUNCIONAL</text>
+  <text x="52" y="98" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="30" font-weight="bold" fill="#ffffff">De un toque a un ticket impreso</text>
+  <text x="52" y="126" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="15" fill="#8ca0be">Todo ocurre en el hilo de interfaz, de forma secuencial y bloqueante. No hay colas ni trabajos en segundo plano.</text>
+  <line x1="52" y1="146" x2="1268" y2="146" stroke="#d4a843" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- LEFT: steps -->
+  <rect x="52" y="172" width="700" height="512" rx="14" fill="#0b1830" stroke="#243d66" stroke-width="1.4"/>
+  <text x="74" y="200" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#8cc4ff" letter-spacing="1">CAMINO DEL TICKET</text>
+
+  <!-- step 1 -->
+  <rect x="74" y="216" width="54" height="54" rx="27" fill="#14361f" stroke="#4f9a6a" stroke-width="1.6"/>
+  <text x="101" y="251" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="20" font-weight="bold" fill="#7ee0a8" text-anchor="middle">1</text>
+  <text x="146" y="240" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">El usuario toca un boton</text>
+  <text x="146" y="262" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#9db4d6">WM_LBUTTONDOWN  ->  LOWORD(lParam), HIWORD(lParam)</text>
+
+  <path d="M101 270 L101 292" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- step 2 -->
+  <rect x="74" y="298" width="54" height="54" rx="27" fill="#14361f" stroke="#4f9a6a" stroke-width="1.6"/>
+  <text x="101" y="333" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="20" font-weight="bold" fill="#7ee0a8" text-anchor="middle">2</text>
+  <text x="146" y="322" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Hit test generoso</text>
+  <text x="146" y="344" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#9db4d6">UI_HitTestButton(x, y)  ->  indice 0..2 o -1</text>
+  <text x="146" y="362" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#7f95b6">el area tactil es un rectangulo expandido 20 px alrededor del boton</text>
+
+  <path d="M101 352 L101 374" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- step 3 -->
+  <rect x="74" y="380" width="54" height="54" rx="27" fill="#14361f" stroke="#4f9a6a" stroke-width="1.6"/>
+  <text x="101" y="415" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="20" font-weight="bold" fill="#7ee0a8" text-anchor="middle">3</text>
+  <text x="146" y="404" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Numero secuencial del dia</text>
+  <text x="146" y="426" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#9db4d6">Ticket_Generate("A", buf, 32)  ->  "A-042"</text>
+  <text x="146" y="444" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#7f95b6">lee contadores.dat, incrementa el contador del prefijo, reescribe el archivo</text>
+
+  <path d="M101 434 L101 456" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- step 4 -->
+  <rect x="74" y="462" width="54" height="54" rx="27" fill="#14361f" stroke="#4f9a6a" stroke-width="1.6"/>
+  <text x="101" y="497" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="20" font-weight="bold" fill="#7ee0a8" text-anchor="middle">4</text>
+  <text x="146" y="486" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Texto del ticket</text>
+  <text x="146" y="508" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#9db4d6">Ticket_FormatOutput(...)  ->  buffer de 512 bytes</text>
+  <text x="146" y="526" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#7f95b6">cabecera, numero, criterio, fecha larga y hora local</text>
+
+  <path d="M101 516 L101 538" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- step 5 -->
+  <rect x="74" y="544" width="54" height="54" rx="27" fill="#3a2a10" stroke="#c08a2a" stroke-width="1.6"/>
+  <text x="101" y="579" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="20" font-weight="bold" fill="#f0b45a" text-anchor="middle">5</text>
+  <text x="146" y="568" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Trama ESC/POS al COM virtual</text>
+  <text x="146" y="590" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#e8c060">Printer_PrintTicket(texto)  ->  WriteFile(hPort, ...)</text>
+  <text x="146" y="608" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#b09a72">si no hay puerto: MessageBoxA de aviso y la aplicacion sigue funcionando</text>
+
+  <path d="M101 598 L101 620" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- step 6 -->
+  <rect x="74" y="626" width="54" height="54" rx="27" fill="#14361f" stroke="#4f9a6a" stroke-width="1.6"/>
+  <text x="101" y="661" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="20" font-weight="bold" fill="#7ee0a8" text-anchor="middle">6</text>
+  <text x="146" y="650" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Vista previa y retorno</text>
+  <text x="146" y="672" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#9db4d6">g_state = TICKET_PREVIEW · SetTimer(2000) · InvalidateRect</text>
+
+  <!-- RIGHT: timeline -->
+  <rect x="776" y="172" width="492" height="512" rx="14" fill="#0b1830" stroke="#243d66" stroke-width="1.4"/>
+  <text x="798" y="200" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#8cc4ff" letter-spacing="1">LINEA DE TIEMPO DE LA PANTALLA</text>
+
+  <!-- state A -->
+  <rect x="798" y="218" width="448" height="92" rx="10" fill="#101f38" stroke="#3c5c96" stroke-width="1.4"/>
+  <text x="818" y="246" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="14" fill="#7ee0a8">LLAMADOS_PANEL</text>
+  <text x="818" y="270" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">mitad superior: hasta 4 llamados activos</text>
+  <text x="818" y="290" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">mitad inferior: los 3 botones de servicio</text>
+  <text x="1210" y="246" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#8ca0be" text-anchor="end">reposo</text>
+
+  <path d="M1022 310 L1022 344" fill="none" stroke="#7ee0a8" stroke-width="2" marker-end="url(#b)"/>
+  <text x="1034" y="332" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11.5" fill="#7ee0a8">toque valido</text>
+
+  <!-- state B -->
+  <rect x="798" y="350" width="448" height="92" rx="10" fill="#2a1f10" stroke="#a07428" stroke-width="1.4"/>
+  <text x="818" y="378" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="14" fill="#f0b45a">TICKET_PREVIEW</text>
+  <text x="818" y="402" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">tarjeta con el numero en tipografia 120 px</text>
+  <text x="818" y="422" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">criterio, fecha y hora, aviso de turno</text>
+  <text x="1210" y="378" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#a07428" text-anchor="end">2000 ms</text>
+
+  <path d="M1022 442 L1022 476" fill="none" stroke="#8ca0be" stroke-width="2" marker-end="url(#c)"/>
+  <text x="1034" y="464" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11.5" fill="#8ca0be">ID_TIMER_PREVIEW expira</text>
+
+  <!-- state A again -->
+  <rect x="798" y="482" width="448" height="80" rx="10" fill="#101f38" stroke="#3c5c96" stroke-width="1.4" stroke-dasharray="7 4"/>
+  <text x="818" y="510" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="14" fill="#7ee0a8">LLAMADOS_PANEL</text>
+  <text x="818" y="534" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">se reanuda el timer de 5 s y se repinta el panel</text>
+  <text x="818" y="552" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#7f95b6">la lista de llamados se recarga desde disco en cada tick</text>
+
+  <line x1="798" y1="586" x2="1246" y2="586" stroke="#1e3a63" stroke-width="1"/>
+  <text x="798" y="610" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#8ca0be">El estado no se guarda: si el proceso se reinicia,</text>
+  <text x="798" y="630" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#8ca0be">siempre arranca en el panel de llamados.</text>
+  <text x="798" y="660" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#d4a843">g_state · g_lastNumero · g_lastCriterio</text>
+
+  <!-- Bottom: frame -->
+  <rect x="52" y="708" width="1216" height="140" rx="14" fill="#0a1527" stroke="#243d66" stroke-width="1.4"/>
+  <text x="74" y="736" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#8cc4ff" letter-spacing="1">TRAMA ENVIADA AL PUERTO (BYTES LITERALES)</text>
+
+  <rect x="74" y="752" width="128" height="46" rx="6" fill="#14361f" stroke="#4f9a6a" stroke-width="1.2"/>
+  <text x="138" y="772" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#7ee0a8" text-anchor="middle">ESC @</text>
+  <text x="138" y="789" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#9db4d6" text-anchor="middle">1B 40 init</text>
+
+  <rect x="214" y="752" width="150" height="46" rx="6" fill="#14361f" stroke="#4f9a6a" stroke-width="1.2"/>
+  <text x="289" y="772" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#7ee0a8" text-anchor="middle">ESC 3 18</text>
+  <text x="289" y="789" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#9db4d6" text-anchor="middle">1B 33 18 interlineado</text>
+
+  <rect x="376" y="752" width="150" height="46" rx="6" fill="#14361f" stroke="#4f9a6a" stroke-width="1.2"/>
+  <text x="451" y="772" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#7ee0a8" text-anchor="middle">ESC t 0F</text>
+  <text x="451" y="789" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#9db4d6" text-anchor="middle">1B 74 0F CP1252</text>
+
+  <rect x="538" y="752" width="392" height="46" rx="6" fill="#1a2a46" stroke="#3c5c96" stroke-width="1.2"/>
+  <text x="734" y="772" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#8cc4ff" text-anchor="middle">linea + ESC a / ESC E / GS ! + texto + LF</text>
+  <text x="734" y="789" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#9db4d6" text-anchor="middle">una pasada por cada linea del buffer</text>
+
+  <rect x="942" y="752" width="140" height="46" rx="6" fill="#3a2a10" stroke="#c08a2a" stroke-width="1.2"/>
+  <text x="1012" y="772" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#f0b45a" text-anchor="middle">ESC d 03</text>
+  <text x="1012" y="789" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#e2d3b6" text-anchor="middle">1B 64 03 avance</text>
+
+  <rect x="1094" y="752" width="150" height="46" rx="6" fill="#3a2a10" stroke="#c08a2a" stroke-width="1.2"/>
+  <text x="1169" y="772" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#f0b45a" text-anchor="middle">ESC i</text>
+  <text x="1169" y="789" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#e2d3b6" text-anchor="middle">1B 69 corte total</text>
+
+  <text x="74" y="826" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#7f95b6">No se consulta el estado de la impresora: el programa asume exito si el puerto se pudo abrir y escribir.</text>
+  <text x="74" y="844" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="11" fill="#d4a843" letter-spacing="2">docs/assets/ticket-flow.svg</text>
+</svg>

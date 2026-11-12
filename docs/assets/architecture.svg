@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura del Totem de Autoatencion</title>
+  <desc id="desc">Diagrama de capas: un unico proceso Win32 con main.c, ui.c, ticket.c, llamados.c y printer.c, y sus archivos de datos contadores.dat y llamados.txt, mas la impresora termica en un puerto COM virtual.</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d4a843"/>
+    </marker>
+    <marker id="arrowDim" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b86b8"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#0d1f3a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#235a3a"/>
+      <stop offset="100%" stop-color="#14361f"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 L0 0 0 40" fill="none" stroke="#13294a" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="860" fill="url(#bg)"/>
+  <rect width="1280" height="860" fill="url(#grid)" opacity="0.55"/>
+
+  <!-- Header -->
+  <text x="52" y="58" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="15" fill="#d4a843" letter-spacing="3">TOTEM DE AUTOATENCION</text>
+  <text x="52" y="96" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="30" font-weight="bold" fill="#ffffff">Arquitectura del software</text>
+  <text x="52" y="124" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="15" fill="#8ca0be">C + Win32 API · un ejecutable · un proceso · un hilo de interfaz</text>
+  <line x1="52" y1="142" x2="1228" y2="142" stroke="#d4a843" stroke-width="1.5" opacity="0.65"/>
+
+  <!-- Process container -->
+  <rect x="52" y="168" width="812" height="520" rx="14" fill="#0d1b33" stroke="#28406e" stroke-width="1.5"/>
+  <rect x="52" y="168" width="812" height="42" rx="14" fill="#122647" stroke="#28406e" stroke-width="1.5"/>
+  <rect x="52" y="196" width="812" height="14" fill="#122647"/>
+  <text x="74" y="195" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="14" fill="#e8c060">totem.exe</text>
+  <text x="176" y="195" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="13" fill="#8ca0be">espacio de usuario · Windows 10/11 · subsistema GUI</text>
+
+  <!-- main.c -->
+  <rect x="76" y="234" width="764" height="104" rx="10" fill="url(#gold)" stroke="#4f9a6a" stroke-width="1.5"/>
+  <text x="98" y="265" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="16" font-weight="bold" fill="#f2f7ff">main.c</text>
+  <text x="98" y="290" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="13" fill="#cfe0d6">WinMain · registro de clase · ventana WS_POPUP 1080x1920</text>
+  <text x="98" y="311" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="13" fill="#cfe0d6">WndProc · maquina de estados · SetTimer / KillTimer</text>
+  <text x="740" y="290" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#9fd6b4" text-anchor="end">orquesta</text>
+
+  <!-- ticket.c -->
+  <rect x="76" y="368" width="370" height="110" rx="10" fill="#122647" stroke="#3c5c96" stroke-width="1.5"/>
+  <text x="96" y="398" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="16" font-weight="bold" fill="#8cc4ff">ticket.c</text>
+  <text x="96" y="422" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">Ticket_Generate()  "%s-%03d"</text>
+  <text x="96" y="443" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">Ticket_CheckDailyReset()</text>
+  <text x="96" y="464" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">Ticket_FormatOutput()</text>
+
+  <!-- llamados.c -->
+  <rect x="470" y="368" width="370" height="110" rx="10" fill="#122647" stroke="#3c5c96" stroke-width="1.5"/>
+  <text x="490" y="398" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="16" font-weight="bold" fill="#8cc4ff">llamados.c</text>
+  <text x="490" y="422" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">Llamados_Load()</text>
+  <text x="490" y="443" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">realloc() progresivo</text>
+  <text x="490" y="464" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">Llamados_Free()</text>
+
+  <!-- printer.c -->
+  <rect x="76" y="502" width="764" height="110" rx="10" fill="#2a1f10" stroke="#a07428" stroke-width="1.5"/>
+  <text x="96" y="532" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="16" font-weight="bold" fill="#e8c060">printer.c</text>
+  <text x="96" y="556" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">FindPrinterPort()  COM1..COM20  ->  fallback impresora predeterminada</text>
+  <text x="96" y="577" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">DCB 9600 8N1 · SetCommTimeouts · WriteFile()</text>
+  <text x="96" y="598" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">tramas ESC/POS: ESC @ · ESC a · ESC E · GS ! · ESC d · ESC i</text>
+
+  <!-- ui.c -->
+  <rect x="76" y="634" width="764" height="40" rx="8" fill="#101d33" stroke="#2b4570" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="96" y="659" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="14" fill="#a9bede">ui.c  ·  GDI: fondo degradado, botones bitmap, tarjetas de llamados, vista previa</text>
+
+  <!-- Arrows inside process -->
+  <path d="M458 286 L458 368" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M652 338 L652 368" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M458 478 L458 502" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Data column -->
+  <rect x="900" y="196" width="328" height="150" rx="10" fill="#0f1e36" stroke="#3c5c96" stroke-width="1.5"/>
+  <text x="920" y="226" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="15" font-weight="bold" fill="#8cc4ff">llamados.txt</text>
+  <text x="920" y="250" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">texto plano · 1 llamado por linea</text>
+  <text x="920" y="271" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#7ee0a8">A-41|Modulo 4</text>
+  <text x="920" y="291" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#7ee0a8">B-12|Modulo 1</text>
+  <text x="920" y="316" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#8ca0be">lo escribe el operador / otro sistema</text>
+  <text x="920" y="334" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#8ca0be">se relee cada 5 s (polling)</text>
+
+  <rect x="900" y="368" width="328" height="132" rx="10" fill="#0f1e36" stroke="#3c5c96" stroke-width="1.5"/>
+  <text x="920" y="398" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="15" font-weight="bold" fill="#8cc4ff">contadores.dat</text>
+  <text x="920" y="422" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#b9cbe6">binario · 1 registro fijo</text>
+  <text x="920" y="443" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#7ee0a8">fecha[9] + ultimoA/B/C</text>
+  <text x="920" y="468" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#8ca0be">si cambia la fecha, se pone a cero</text>
+  <text x="920" y="487" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12" fill="#8ca0be">en la primera lectura del dia</text>
+
+  <rect x="900" y="522" width="328" height="148" rx="10" fill="#2a1f10" stroke="#a07428" stroke-width="1.5"/>
+  <text x="920" y="552" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="15" font-weight="bold" fill="#e8c060">Impresora termica</text>
+  <text x="920" y="576" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">Masung MS800 o compatible</text>
+  <text x="920" y="598" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">papel 80 mm · corte automatico</text>
+  <text x="920" y="622" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="12.5" fill="#e2d3b6">driver USB-CDC: aparece como COMx</text>
+  <text x="920" y="646" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12.5" fill="#f0b45a">\\\\.\\COM1 .. \\\\.\\COM20</text>
+
+  <!-- Arrows to data -->
+  <path d="M840 423 L900 423" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M900 271 L840 271" fill="none" stroke="#6b86b8" stroke-width="2" marker-end="url(#arrowDim)"/>
+  <path d="M840 557 L900 557" fill="none" stroke="#d4a843" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="856" y="412" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="11" fill="#8ca0be">lee/escribe</text>
+  <text x="856" y="261" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="11" fill="#8ca0be">lee</text>
+  <text x="856" y="546" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="11" fill="#8ca0be">escribe</text>
+
+  <!-- Footer note -->
+  <line x1="52" y1="712" x2="1228" y2="712" stroke="#1e3a63" stroke-width="1"/>
+  <text x="52" y="742" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="13" fill="#7f95b6">Sin dependencias externas: solo gdi32, user32, msimg32 (GradientFill, TransparentBlt) y winspool (fallback de impresora).</text>
+  <text x="52" y="768" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" font-size="13" fill="#7f95b6">No hay hilos, ni sockets, ni base de datos: el estado vive en la RAM del proceso y en dos archivos junto al ejecutable.</text>
+  <text x="52" y="806" font-family="Consolas, DejaVu Sans Mono, monospace" font-size="12" fill="#d4a843" letter-spacing="2">docs/assets/architecture.svg</text>
+</svg>
