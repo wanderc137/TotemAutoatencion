@@ -587,3 +587,55 @@ Se puede usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y
 [Inicio](#tótem-de-autoatención) · [Manual del operador](docs/datasheet.md) · [Manual del desarrollador](docs/developer.md) · [Referencias](docs/REFERENCES.md)
 
 </div>
+
+## Ficha de evaluación
+
+**Madurez global: 4.2/5**
+
+| Criterio | Nota | Evidencia |
+|---|---:|---|
+| Madurez | 3/5 | Prototipo que compila con MinGW-w64 y binario de 6,9 MB versionado; sin ejecución contra pantalla táctil ni impresora física. |
+| Reproducibilidad | 4/5 | Makefile con gcc y recursos .rc, sin runtime ni instalador; la compilación es determinista, pero no hay prueba end-to-end que repetir. |
+| Documentación | 4/5 | README de 41 KB, datasheet de 21 KB, developer de 32 KB y bitácora con 10 problemas; incluye tabla de comandos ESC/POS y formato de llamados.txt. |
+| Honestidad de límites | 5/5 | Declara "sin pruebas de hardware" en la portada y en la bitácora, y separa lo hecho de los 8 pasos que faltan para producción. |
+| Valor demostrativo | 4/5 | GDI completo sin framework, ESC/POS crudo sobre puerto serie, contadores en struct de 24 bytes y archivo de texto como interfaz de administración. |
+| Facilidad de despliegue | 5/5 | Copiar la carpeta y ejecutar totem.exe: no escribe en el registro, no abre puertos de red y se desinstala borrando archivos. |
+
+Sirve para entender un tótem de bajo nivel y como base para una instalación real en una oficina pequeña. La limitación que más pesa es que ni la impresora ni la pantalla táctil se probaron, y la impresión bloquea la interfaz.
+
+## Lo que no funcionó
+
+### v1.0 · enlace — El ejecutable superaba los 9 MB
+
+Los BMP de botones a 600 × 600 sin compresión, con btn_negro.bmp de 2,5 MB, inflaban el binario. Se compiló con -Os -s y se aceptó el resultado de 6,9 MB; eliminar btn_negro.bmp ahorraría 2,5 MB y quedó como deuda.
+
+### v1.0 · impresión — El número del ticket nunca salía a triple tamaño
+
+La rama existía, pero la detección busca líneas que empiecen por A, B o C y el formato emite "  Numero: A-041", así que nunca coincidía. Quedó código muerto; se activa poniendo el número en una línea propia.
+
+### v1.0 · interfaz — Las franjas táctiles de los botones se superponen
+
+Con paso de 230 px, alto de 200 y 20 px de margen, los bordes se solapan 10 px y gana el primer botón que coincide. No se corrigió porque el efecto es imperceptible con el dedo, pero el borde superior del botón 2 responde como botón 1.
+
+### v1.0 · documentación — La documentación describía funciones y módulos inexistentes
+
+El README previo mencionaba Printer_GetDefault, StartDocPrinter/WritePrinter, display.c y archivos PNG, cuando el código usa ESC/POS directo y BMP. Se reescribieron README, datasheet y developer leyendo el código fuente línea por línea.
+
+## Preguntas típicas
+
+**¿Qué es Tótem de Autoatención?**
+
+Una aplicación Win32 en C para Windows que ocupa la pantalla de un monitor vertical, emite tickets numerados por servicio e imprime por ESC/POS, con un panel que muestra los llamados.
+
+**¿Incluye base de datos o panel de administración?**
+
+No. El estado son dos archivos: contadores.dat con los correlativos diarios y llamados.txt con líneas NUMERO|MODULO que el operador edita a mano.
+
+**¿Cómo se compila y ejecuta?**
+
+Con make y MinGW-w64 se genera totem.exe; se copia la carpeta al equipo, se conecta la térmica por USB-serie y se ejecuta el binario, que busca el puerto COM1–COM20.
+
+**¿Qué se puede reutilizar?**
+
+La impresión ESC/POS directa sin driver, la detección de puerto en cascada con fallback a impresora predeterminada y el dibujo GDI a resolución fija con hit test ampliado.
+
